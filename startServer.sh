@@ -1,3 +1,5 @@
 #!/bin/sh
 
-echo "GLPI-Server is under devellopement, please come back later."
+echo "[Warning] - GLPI-Server is under devellopement."
+
+python3 ./Sources/glpi/manage.py runserver
