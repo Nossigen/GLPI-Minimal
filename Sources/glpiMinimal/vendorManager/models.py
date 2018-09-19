@@ -9,8 +9,8 @@ class   CommandState    (models.Model):
 class   Vendor          (models.Model):
     name        = models.CharField(max_length = 255)
     adress      = models.CharField(max_length = 512)
-    email       = models.EmailField(null = True)
-    comment     = models.TextField(null = True)
+    email       = models.EmailField(null = True, blank = True)
+    comment     = models.TextField(null = True, blank = True)
 
     def __str__         (self):
         return self.name

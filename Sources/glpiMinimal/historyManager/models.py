@@ -11,7 +11,7 @@ class   ObjectState     (models.Model):
 
 class   ObjectHistory   (models.Model):
     ref         = models.UUIDField(primary_key = True)
-    comment     = models.TextField(null = True)
+    comment     = models.TextField(null = True, blank = True)
     date        = models.DateField()
     position    = models.CharField(max_length = 512)
 

@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import ObjectType, ObjectDataType, ObjectData, Object
+
+admin.site.register(ObjectType)
+admin.site.register(ObjectDataType)
+admin.site.register(ObjectData)
+admin.site.register(Object)

@@ -31,7 +31,7 @@ class   Object          (models.Model):
     name        = models.CharField(max_length = 255)
 
     # Links
-    objectIn    = models.ForeignKey('self', on_delete = models.CASCADE)
+    objectIn    = models.ForeignKey('self', on_delete = models.CASCADE, null = True, blank = True)
     user        = models.ForeignKey(User, on_delete = models.CASCADE)
     command     = models.ForeignKey(Command, on_delete = models.CASCADE)
     objectType  = models.ForeignKey(ObjectType, on_delete = models.CASCADE)
@@ -40,7 +40,7 @@ class   Object          (models.Model):
         return self.name
 
 class   ObjectData            (models.Model):
-    value       = models.TextField(null = True)
+    value       = models.TextField(null = True, blank = True)
 
     # Links
     item                = models.ForeignKey(Object, on_delete = models.CASCADE)
