@@ -1,0 +1,27 @@
+
+{% if vendor_list %}
+
+<ul>
+  {% for vendor in vendor_list %}
+
+  <li>{{vendor.name}} | {{vendor.adress}}</li>
+
+  {% if vendor.email %}
+  <p>
+    email: {{ vendor.email }}
+  </p>
+  {% endif %}
+
+  {% if vendor.comment %}
+  <p>
+    commentaire: {{ vendor.comment }}
+    </p>
+  {% endif %}
+  {% endfor %}
+</ul>
+
+{% else %}
+
+<p> Il n'y a pas de fournisseurs disponible. </p>
+
+{% endif %}

@@ -1,9 +1,9 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 import os
 import sys
 
 if __name__ == '__main__':
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'glpi.settings')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'glpiMinimal.settings')
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:

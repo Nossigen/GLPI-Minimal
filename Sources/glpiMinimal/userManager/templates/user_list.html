@@ -1,0 +1,33 @@
+
+<h1>{{ listName }}</h1>
+
+{% if userList %}
+
+<table border=1>
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Prénom</th>
+      <th>Email</th>
+      <th>Role</th>
+      <th>Job</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for user in userList %}
+    <tr>
+      <td>{{user.name}}</td>
+      <td>{{user.forname}}</td>
+      <td>{{user.email | default:"Aucune information renseigné"}}</td>
+      <td>{{user.userRole.name}}</td>
+      <td>{{user.userJob.name}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+
+
+{% else %}
+
+  Aucun utilisateur n'est enregistré pour le moment
+
+{% endif %}

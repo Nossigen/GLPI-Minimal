@@ -1,0 +1,37 @@
+
+<h1>{{ listName }}</h1>
+{% if userList %}
+
+{% regroup userList by userRole.name as user_role_list %}
+
+{% for users_by_role in user_role_list %}
+
+<h2>{{ users_by_role.grouper }}</h2>
+
+<table border=1>
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Prénom</th>
+      <th>Role</th>
+      <th>Job</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for user in users_by_role.list %}
+    <tr>
+      <td>{{user.name}}</td>
+      <td>{{user.forname}}</td>
+      <td>{{user.userRole.name}}</td>
+      <td>{{user.userJob.name}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+  </table>
+    {% endfor %}
+
+{% else %}
+
+Aucun utilisateur n'est enregistré pour le moment
+
+{% endif %}
