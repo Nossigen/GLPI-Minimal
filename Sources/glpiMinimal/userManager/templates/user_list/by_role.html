@@ -1,0 +1,57 @@
+<!-- list by role -->
+<div id="by_role">
+
+{% if userListRole %}
+
+{% regroup userListRole by userRole.name as user_role_list %}
+
+{% for users_by_role in user_role_list %}
+
+<h5>{{ users_by_role.grouper }}</h5>
+
+<table class="striped centered responsive-table">
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Prénom</th>
+      <th>Email</th>
+      <th>Date de sortie</th>
+      <th>Job</th>
+      <th>Informations</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for user in users_by_role.list %}
+	{% if user.outDate %}
+		{% if user.outDate < today %}
+				     <tr class="red white-text">
+		{% else %}
+				     <tr class="orange white-text">
+		{% endif %}
+	{% else %}
+		<tr>
+	{% endif %}
+
+	<td>{{ user.name }}</td>
+	<td>{{ user.forname }}</td>
+	<td>{{ user.email | default:"x" }}</td>
+	<td>{{ user.outDate | default:"x" }}</td>
+	<td>{{ user.userJob.name }}</td>
+	<td>
+	  <a class="waves-effect waves-light btn indigo" href="/user/{{user.pk}}">
+	    Lien<i class="material-icons right">send</i>
+	  </a>
+	</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<br>
+    {% endfor %}
+
+{% else %}
+
+Aucun utilisateur n'est enregistré pour le moment
+
+{% endif %}
+</div>

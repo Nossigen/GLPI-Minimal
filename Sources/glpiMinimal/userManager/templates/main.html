@@ -1,0 +1,117 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>{% block title %}No title{% endblock %}</title>
+
+    {% block head %}
+    {% endblock head %}
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet"
+    	  href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <link rel="stylesheet" href="{% static "css/navbar.css" %}">
+
+  </head>
+
+  <body>
+
+    {% block navbar %}
+
+    {% block sidenavbar %}
+    <ul id="mobile-version" class="sidenav sidenav-fixed">
+
+      <li class="indigo center white-text">
+	Navigation - Administration
+      </li>
+
+      <ul class="collapsible">
+
+	  <li class="bold">
+	    <a class="collapsible-header waves-effect">
+	      Utilisateurs
+	    </a>
+	    <div class="collapsible-body">
+              <ul>
+		<li><a href="/user/new">Ajouter</a></li>
+                <li><a href="/user/list">Liste</a></li>
+              </ul>
+	    </div>
+          </li>
+
+	  <li class="bold">
+	    <a class="collapsible-header waves-effect">Matériel</a>
+            <div class="collapsible-body">
+              <ul>
+                <li><a href="badges.html">1</a></li>
+                <li><a href="buttons.html">2</a></li>
+                <li><a href="breadcrumbs.html">3</a></li>
+              </ul>
+            </div>
+          </li>
+
+      </ul>
+    </ul>
+      {% endblock sidenavbar %}
+
+    {% block topnavbar %}
+    <div class="navbar navbar-fixed">
+      <nav>
+	<div class="nav-wrapper indigo">
+	  <a href="#" class="center brand-logo">GLPI Minimal</a>
+	  <a href="#" data-target="mobile-version" class="sidenav-trigger">
+	    <i class="material-icons">menu</i>
+	  </a>
+	</div>
+      </nav>
+    </div>
+      {% endblock topnavbar %}
+
+    {% endblock navbar %}
+
+    <main>
+      <div class="container">
+	{% block content %}
+	No content<br>
+	{% endblock content %}
+      </div>
+    </main>
+    {% block footer %}
+    {% endblock footer %}
+
+    <!-- Scripts -->
+    <div id="scripts">
+    <!-- JQuery 3.3.1 -->
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous">
+    </script>
+    <!-- Materialize 1.0.0 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js">
+    </script>
+
+    <!-- Script Navbar mobile version -->
+    <script>
+      $(document).ready(function()
+      {
+      $('.sidenav').sidenav();
+      });
+    </script>
+    <!-- Collapsible (dropdown for left sidebar) -->
+    <script>
+      $(document).ready(function()
+      {
+      $('.collapsible').collapsible();
+      }
+      );
+    </script>
+    {% block script %}
+    {% endblock script %}
+    </div>
+  </body>
+</html>

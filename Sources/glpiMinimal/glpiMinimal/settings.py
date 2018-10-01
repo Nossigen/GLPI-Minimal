@@ -16,6 +16,10 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+# Static directory for shared files
+STATIC_URL = '/static/'
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
@@ -41,7 +45,7 @@ INSTALLED_APPS = [
     'objectManager.apps.ObjectmanagerConfig',
     'ticketManager.apps.TicketmanagerConfig',
     'userManager.apps.UsermanagerConfig',
-#    'vendorManager.apps.VendormanagerConfig',
+    'vendorManager.apps.VendormanagerConfig',
 ]
 
 MIDDLEWARE = [

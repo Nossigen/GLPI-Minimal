@@ -22,5 +22,5 @@ urlpatterns = [
     path('object/',     include('objectManager.urls')),
     path('ticket/',     include('ticketManager.urls')),
     path('user/',       include('userManager.urls')),
-    #    path('vendor/',     include('vendorManager.urls')),
+    path('vendor/',     include('vendorManager.urls')),
 ]

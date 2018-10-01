@@ -1,33 +1,52 @@
+{% extends "main.html" %}
+{% load static %}
 
-<h1>{{ listName }}</h1>
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+{% endblock head %}
 
-{% if userList %}
+{% block title %}Liste des utilisateurs{% endblock title %}
 
-<table border=1>
-  <thead>
-    <tr>
-      <th>Nom</th>
-      <th>Prénom</th>
-      <th>Email</th>
-      <th>Role</th>
-      <th>Job</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for user in userList %}
-    <tr>
-      <td>{{user.name}}</td>
-      <td>{{user.forname}}</td>
-      <td>{{user.email | default:"Aucune information renseigné"}}</td>
-      <td>{{user.userRole.name}}</td>
-      <td>{{user.userJob.name}}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
+{% block content %}
 
+<br>
+<h4>{{ listName }}</h4>
+<br>
+<!-- tabs -->
+<div class="row">
+    <div class="col s12">
+      <ul class="tabs indigo">
+        <li class="tab col s4">
+	  <a class="active white-text" href="#main">Générale</a>
+	</li>
+        <li class="tab col s4">
+	  <a class="white-text" href="#by_role">Par rôle</a>
+	</li>
+        <li class="tab col s4">
+	  <a class="white-text" href="#by_job">Par job</a>
+	</li>
+      </ul>
+    </div>
+</div>
 
-{% else %}
+{% include "./user_list/all.html" %}
+{% include "./user_list/by_job.html" %}
+{% include "./user_list/by_role.html" %}
 
-  Aucun utilisateur n'est enregistré pour le moment
+<br>
 
-{% endif %}
+{% endblock content %}
+
+{% block script %}
+<!-- tabs script -->
+<script>
+  $(document).ready(
+  function()
+  {
+  $('.tabs').tabs(
+  {
+  });
+  }
+  );
+</script>
+{% endblock script %}

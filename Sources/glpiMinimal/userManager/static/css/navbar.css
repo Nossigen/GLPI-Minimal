@@ -1,0 +1,14 @@
+/* user/static/navbar.css */
+
+@media (min-width: 992px)
+{
+    main
+    {
+	padding-left: 300px;
+    }
+
+    #navbar
+    {
+	padding-left: 300px;
+    }
+}
