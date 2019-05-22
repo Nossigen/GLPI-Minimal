@@ -1,0 +1,69 @@
+{% extends "main.html" %}
+{% load static %}
+
+{% block title %}Utilisateurs{% endblock title %}
+
+{% block content %}
+
+<!-- list all -->
+{% if userList %}
+
+<table class="striped centered responsive-table">
+
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Prénom</th>
+      <th>Email</th>
+      <th>Date de sortie</th>
+      <th>Job</th>
+      <th>Informations</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for user in userList %}
+
+		{% if user.entryDate %}
+			{% if user.entryDate > today %}
+				<tr class="green white-text">
+			{% elif user.outDate %}
+				{% if user.outDate < today %}
+					<tr class="red white-text">
+				{% else %}
+					<tr class="orange white-text">
+				{% endif %}
+			{% else %}
+				<tr>	
+			{% endif %}
+		{% elif user.outDate %}
+			{% if user.outDate < today %}
+					     <tr class="red white-text">
+			{% else %}
+					     <tr class="orange white-text">
+			{% endif %}
+		{% else %}
+			<tr>
+		{% endif %}
+		<td>{{ user.name }}</td>
+		<td>{{ user.forname }}</td>
+		<td>{{ user.email | default:"x" }}</td>
+		<td>{{ user.outDate | default:"x" }}</td>
+		<td>{{ user.userJob.name }}</td>
+		<td>
+			<a class="waves-effect waves-light btn indigo" href="/user/{{user.pk}}">
+				Lien<i class="material-icons right">send</i>
+			</a>
+		</td>
+		</tr>
+	{% endfor %}
+  </tbody>
+  <br>
+</table>
+{% else %}
+
+  Aucun utilisateur n'est enregistré pour le moment<br>
+
+{% endif %}
+
+{% endblock content %}

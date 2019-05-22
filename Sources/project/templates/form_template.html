@@ -1,0 +1,254 @@
+
+{% if prefix_icon %}
+	<i class='material-icons prefix'>{{prefix_icon}}</i>
+{% endif %}
+
+{# ################################################ #}
+{# ############   ###  TEXT  ###   ################ #}
+{# ################################################ #}
+
+{% if form_type == 'text' %}
+
+<input type='{{ form_type }}'
+
+       name='{{ form_elem.html_name }}'
+       class='validate
+			{% if form_elem.errors %}
+				invalid
+			{% endif %}'
+
+		id='{{ form_elem.id_for_label }}'
+
+		value=
+		{% if form_elem.value != None %}
+			'{{ form_elem.value }}'
+		{% else %}
+			''
+		{% endif %}
+
+		{% if form_elem.field.max_length %}
+			maxlength='{{ form_elem.field.max_length }}'
+		{% endif %}
+		
+		{% if form_elem.field.required %}
+			required
+		{% endif %}
+>
+
+<label for='{{ form_elem.id_for_label }}'>{{ form_elem.label }}</label>
+<label	class='helper-text' for='{{ form_elem.id_for_label }}'
+		data-error='{% if form_elem.errors%}{% for error in form_elem.errors %}{{error}}{% endfor %}{% else %}Valeur incorrecte{% endif %}'></label>
+
+{# ################################################# #}
+{# ############   ###  EMAIL  ###   ################ #}
+{# ################################################# #}
+
+{% elif form_type == 'email' %}
+
+<input type='email'
+
+       name='{{ form_elem.html_name }}'
+       class='validate 
+			{% if form_elem.errors %}
+				invalid
+			{% endif %}'
+
+		id='{{ form_elem.id_for_label }}'
+
+		value=
+		{% if form_elem.value != None %}
+			'{{ form_elem.value }}'
+		{% else %}
+			''
+		{% endif %}
+
+		{% if form_elem.field.max_length %}
+			maxlength='{{ form_elem.field.max_length }}'
+		{% endif %}
+		
+		{% if form_elem.field.required %}
+			required
+		{% endif %}
+>
+<label for='{{ form_elem.id_for_label }}'>{{ form_elem.label }}</label>
+<label	class='helper-text' for='{{ form_elem.id_for_label }}'
+		data-error='{% if form_elem.errors%}{% for error in form_elem.errors %}{{error}}{% endfor %}{% else %}Valeur incorrecte{% endif %}'></label>
+
+{# ################################################ #}
+{# ############   ###  DATE  ###   ################ #}
+{# ################################################ #}
+
+{% elif form_type == 'date' %}
+
+<input type='date'
+
+       name='{{ form_elem.html_name }}'
+       class='datepicker
+       		validate 
+			{% if form_elem.errors %}
+				invalid
+			{% endif %}'
+
+		id='{{ form_elem.id_for_label }}'
+
+		value=
+		{% if form_elem.value != None %}
+			'{{ form_elem.value }}'
+		{% else %}
+			''
+		{% endif %}
+
+		{% if form_elem.field.max_length %}
+			maxlength='{{ form_elem.field.max_length }}'
+		{% endif %}
+		
+		{% if form_elem.field.required %}
+			required
+		{% endif %}
+>
+
+<label for='{{ form_elem.id_for_label }}'>{{ form_elem.label }}</label>
+<label class='helper-text' for='{{ form_elem.id_for_label }}' data-error='Valeur incorrecte'></label>
+
+
+{# ############################################### #}
+{# #############   ###  SELECT ###   ############# #}
+{# ############################################### #}
+{% elif form_type == 'select' %}
+
+<select
+		name='{{ form_elem.html_name }}'
+		id='{{ form_elem.id_for_label }}'
+		{% if form_elem.value != None %}
+			value='{{ form_elem.value }}'
+		{% endif %}
+		{% if form_elem.field.required %}
+			required
+		{% endif %}	
+		class='select_zone'
+>
+
+	{% for pk, name in form_elem.field.choices %}
+		{% if form_elem.value == pk %}
+			<option value={{ pk }} selected>{{ name }}</option>
+		{% else %}
+			<option value={{ pk }}>{{ name }}</option>
+		{% endif %}
+	{% endfor %}
+
+</select>
+
+{# ######################################################## #}
+{# #############   ###  SELECT MULTIPLE ###   ############# #}
+{# ######################################################## #}
+{% elif form_type == 'select_multiple' %}
+
+<select multiple
+		name='{{ form_elem.html_name }}'
+		id='{{ form_elem.id_for_label }}'
+		{% if form_elem.value != None %}
+			value='{{ form_elem.value }}'
+		{% endif %}
+		{% if form_elem.field.required %}
+			required
+		{% endif %}
+		class='select_zone'
+>
+
+	{% for pk, name in form_elem.field.choices %}
+		{% if pk in form_elem.value %}
+			<option value={{ pk }} selected>{{ name }}</option>
+		{% else %}
+			<option value={{ pk }}>{{ name }}</option>
+		{% endif %}
+	{% endfor %}
+
+</select>
+
+<label for='{{ form_elem.id_for_label }}'>{{ form_elem.label }}</label>
+<label	class='helper-text' for='{{ form_elem.id_for_label }}'
+		data-error='{% if form_elem.errors%}{% for error in form_elem.errors %}{{error}}{% endfor %}{% else %}Valeur incorrecte{% endif %}'></label>
+
+{# ##################################################### #}
+{# #############   ###  SELECT COLOR ###   ############# #}
+{# ##################################################### #}
+{% elif form_type == 'select_color' %}
+
+<select
+		name='{{ form_elem.html_name }}'
+		id='{{ form_elem.id_for_label }}'
+		{% if form_elem.value != None %}
+			value='{{ form_elem.value }}'
+		{% endif %}
+		{% if form_elem.field.required %}
+			required
+		{% endif %}	
+		class='select_zone'
+>
+
+	{% for pk, name in form_elem.field.choices %}
+		<option class='indigo-text' value={{ pk }} style='background-color:{{name}};' data-icon='{{name}}'>{{ name }}</option>
+	{% endfor %}
+
+</select>
+
+<label for='{{ form_elem.id_for_label }}'>{{ form_elem.label }}</label>
+<label	class='helper-text' for='{{ form_elem.id_for_label }}'
+		data-error='{% if form_elem.errors%}{% for error in form_elem.errors %}{{error}}{% endfor %}{% else %}Valeur incorrecte{% endif %}'></label>
+
+{# ################################################ #}
+{# ############   ###  TEXT AREA ###   ############ #}
+{# ################################################ #}
+{% elif form_type == 'text_area' %}
+
+<textarea
+       name='{{ form_elem.html_name }}'
+       class='materialize-textarea
+       		validate 
+			{% if form_elem.errors %}
+				invalid
+			{% endif %}'
+		id='{{ form_elem.id_for_label }}'
+		{% if form_elem.field.required %}
+			required
+		{% endif %}
+>
+{% if form_elem.value != None %}'{{ form_elem.value }}'{% endif %}
+</textarea>
+
+<label for='{{ form_elem.id_for_label }}'>{{ form_elem.label }}</label>
+<label	class='helper-text' for='{{ form_elem.id_for_label }}'
+		data-error='{% if form_elem.errors%}{% for error in form_elem.errors %}{{error}}{% endfor %}{% else %}Valeur incorrecte{% endif %}'></label>
+
+{# ################################################ #}
+{# #############   ###  NUMBER  ###   ############# #}
+{# ############################################### #}
+{% elif form_type == 'number' %}
+
+
+<input type='{{ form_type }}'
+
+       name='{{ form_elem.html_name }}'
+       class='validate 
+			{% if form_elem.errors %}
+				invalid
+			{% endif %}'
+
+		id='{{ form_elem.id_for_label }}'
+
+		value=
+		{% if form_elem.value != None %}
+			'{{ form_elem.value }}'
+		{% else %}
+			''
+		{% endif %}
+		
+		{% if form_elem.field.required %}
+			required
+		{% endif %}
+>
+
+<label for='{{ form_elem.id_for_label }}'>{{ form_elem.label }}</label>
+<label class='helper-text' for='{{ form_elem.id_for_label }}' data-error='Valeur incorrecte'></label>
+
+{% endif %}

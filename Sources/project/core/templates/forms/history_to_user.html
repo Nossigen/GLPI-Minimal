@@ -1,0 +1,104 @@
+{% extends "main.html" %}
+{% load static %}
+
+{% block title %}
+Nouvel historique
+{% endblock title %}
+
+{% block content %}
+
+<form	action="{% url 'core:object_to_user' default_values.object.pk %}"
+		method="post"
+		class='history_to_user'
+>
+	{% csrf_token %}
+
+	<div class='card white z-depth-2'>
+		<div class='card-content'>
+			<div class='row'>
+				<div class='col s12 m6 input-field'>
+					<div class='select-wrapper'>
+						<select name='{{ form.user.name }}'
+						 		id='{{ form.fields.user.id_for_label }}' 
+						>
+							{% for x,y in form.fields.user.choices %}
+		   						<option value='{{ x }}'>{{ y }}</option>
+							{% endfor %}
+						</select>
+						<label for='{{ form.user.id_for_label }}'>
+							{{ form.user.label }}
+						</label>
+					</div>				
+				</div>
+				<div class='col s12 m6 input-field'>
+					<div class='select-wrapper'>
+						<select name='{{ form.objectShown.name }}'
+								id='{{ form.objectShown.id_for_label }}' 
+								disabled
+						>
+								<option value={{ default_values.object.pk }} selected> {{ default_values.object }}</option>
+						</select>
+						<label for='{{ form.objectShown.id_for_label }}'>
+							{{ form.objectShown.label }}
+						</label>
+					</div>				
+				</div>
+			</div>
+			<div class='row'>
+				<div class='input-field col s12 m6'>
+					<input type='date'
+						class='datepicker'
+						name='{{ form.date.name }}'
+						id='{{ form.date.id_for_label}}'
+					>
+					<label for='{{ form.date.id_for_label }}'>
+						{{ form.date.label}}
+					</label>
+				</div>
+				<div class='input-field col s12 m6 select-wrapper'>
+					<select name='{{ form.objectState.name }}'
+					 		id='{{ form.fields.objectState.id_for_label }}' 
+					>
+						{% for x,y in form.fields.objectState.choices %}
+	   						<option value='{{ x }}'>{{ y }}</option>
+						{% endfor %}
+					</select>
+					<label for='{{ form.objectState.id_for_label }}'>
+						{{ form.objectState.label }}
+					</label>
+				</div>
+			</div>
+			<div class='row input-field'>
+				{{ form.position }}
+				<label for='{{ form.position.id_for_label }}'>
+					{{ form.position.label }}
+				</label>
+			</div>
+		</div>
+	</div>
+	<button class='btn btn-submit waves-effect waves-light indigo right disabled'>
+	   	Ajouter
+	   	<i class="material-icons right">send</i>
+	</button>
+</form>
+
+{% endblock content %}
+
+{% block script %}
+
+<!-- Selection list form -->
+<script src="{% static "js/load/load_select.js" %}">
+</script>
+
+<!-- Datepicker form -->
+<script src="{% static "js/load/load_datepicker_fr.js" %}">
+</script>
+
+<!-- Form button enabler -->
+<script src="{% static 'js/form_button.js'%} ">
+</script>
+
+<script>
+	set_form_checker('.history_to_user');
+</script>
+{% endblock script %}

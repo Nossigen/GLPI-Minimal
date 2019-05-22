@@ -1,0 +1,86 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>
+			{% block title %}
+				{% if title %}
+					{{ title }}
+				{% else %}
+					GPIP
+				{% endif %}
+			{% endblock %}
+		</title>
+
+		{% block head %}
+		{% endblock head %}
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link rel="stylesheet" href="{% static "css/materialize.css"%}">
+
+		<link rel="stylesheet" href="{% static "css/navbar.css" %}">
+
+	</head>
+
+	<body>
+
+	{% block navbar %}
+
+		{% include "leftNavBar.html" %}
+		{% include "topNavBar.html" %}
+
+	{% endblock navbar %}
+
+	<main>
+    	<div class="container">
+			{% include "navTitle.html" %}
+			<br>
+			{% block content %}
+				No content
+				<br>
+			{% endblock content %}
+		</div>
+	</main>
+
+    {% block footer %}
+    {% endblock footer %}
+
+    <!-- Scripts -->
+    <div id="scripts">
+    <!-- JQuery 3.3.1 -->
+    <script
+      src="{% static 'js/jquery.js' %}"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous">
+    </script>
+    <!-- Materialize 1.0.0 -->
+    <script src="{% static 'js/materialize.js' %}">
+    </script>
+
+    <!-- Script Navbar mobile version -->
+    <script>
+      $(document).ready(function()
+      	{
+	     	$('.sidenav').sidenav();
+      	}
+      );
+    </script>
+    <!-- Collapsible (dropdown for left sidebar) -->
+    <script>
+      $(document).ready(function()
+      	{
+    		$('.collapsible').collapsible();
+      	}
+      );
+    </script>
+    <script>
+		M.AutoInit();
+    </script>
+    {% block script %}
+    {% endblock script %}
+    </div>
+  </body>
+</html>

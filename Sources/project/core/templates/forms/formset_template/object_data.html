@@ -1,0 +1,24 @@
+<div class="form-__prefix__-objectData" style="display: none;">
+	<div class="form_inner row">
+    	<div class="card white z-depth-2">
+        	<div class="card-content indigo-text">
+				<span class="card-title">__title__</span>
+				<br>
+				<div class="row">
+		    		<div class="input-field">
+						{% with form_elem=formsetObjectData.empty_form.value  form_type='text_area' prefix_icon='' %}
+							{% include 'form_template.html'%}
+						{% endwith %}
+						{{ formetsetObjectData.empty_form.value.name }}
+					</div>
+				</div>
+				<input type='hidden'
+						name='{{ formsetObjectData.empty_form.hidden.html_name }}'
+						id='{{ formsetObjectData.empty_form.hidden.id_for_label }}'
+						class='object_data_select'
+						value='0'
+						>
+			</div>
+		</div>
+	</div>
+</div>

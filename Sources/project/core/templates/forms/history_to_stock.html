@@ -1,0 +1,88 @@
+{% extends "main.html" %}
+{% load static %}
+
+{% block content %}
+
+<form id='history_to_stock' action="{% url 'core:object_to_stock' default_values.object.pk %}" method="post">
+	{% csrf_token %}
+
+	<div class='card white z-depth-2'>
+		<div class='card-content'>
+			<div class='row'>
+				<div class='col s12 m6 input-field'>
+					<div class='select-wrapper'>
+						<select name='{{ default_values.user.name }}'
+								id='id_{{ default_values.user.name }}' 
+								disabled
+						>
+								<option value={{ default_values.user.pk }} selected> {{ default_values.user }}</option>
+						</select>
+						<label for='id_{{ default_values.user.name }}'>
+							Utilisateur
+						</label>
+					</div>				
+				</div>
+				<div class='col s12 m6 input-field'>
+					<div class='select-wrapper'>
+						<select name='{{ form.objectShown.name }}'
+								id='{{ form.objectShown.id_for_label }}' 
+								disabled
+						>
+								<option value={{ default_values.object.pk }} selected> {{ default_values.object }}</option>
+						</select>
+						<label for='{{ form.objectShown.id_for_label }}'>
+							{{ form.objectShown.label }}
+						</label>
+					</div>				
+				</div>
+			</div>
+			<div class='row'>
+				<div class='input-field col s12 m6'>
+					{% with form_elem=form.date form_type='date' prefix_icon='date_range' %}
+						{% include 'form_template.html' %}
+					{% endwith %}
+				</div>
+				<div class='input-field col s12 m6 select-wrapper'>
+					{% with form_elem=form.objectState form_type='select' %}
+						{% include 'form_template.html'%}
+					{% endwith %}
+				</div>
+			</div>
+			<div class='row input-field'>
+				{% with form_elem=form.position form_type='text' prefix_icon='location_on' %}
+					{% include 'form_template.html' %}
+				{% endwith %}
+			</div>
+			<div class='row input-field'>
+				{% with form_elem=form.comment form_type='text_area' prefix_icon='' %}
+					{% include 'form_template.html' %}
+				{% endwith %}
+			</div>			
+		</div>
+	</div>
+	<button id='btn-send' class='btn btn-submit waves-effect waves-light indigo disabled right'>
+	   	Ajouter
+	   	<i class="material-icons right">send</i>
+	</button>
+</form>
+
+{% endblock content %}
+
+{% block script %}
+
+<!-- Selection list form -->
+<script src="{% static "js/load/load_select.js" %}">
+</script>
+
+<!-- Datepicker form -->
+<script src="{% static "js/load/load_datepicker_fr.js" %}">
+</script>
+
+<script src='{% static 'js/form_button.js' %}'>
+</script>
+
+<script>
+	set_form_checker('#history_to_stock');
+</script>
+
+{% endblock script %}

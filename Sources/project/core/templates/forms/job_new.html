@@ -1,0 +1,75 @@
+{% extends "main.html" %}
+{% load static %}
+
+{% block content %}
+
+<form	action="{% url 'core:job_new' %}"
+		method="post"
+		class='job'>
+
+    {% csrf_token %}
+
+	<div class='card white z-depth-2'>
+		<div class='card-content'>
+			<div class='row'>
+				<div class='input-field'>
+					{% with form_elem=form.name form_type='text' prefix_icon='assignment_ind' %}
+						{% include 'form_template.html'%}
+					{% endwith %}
+		    	</div>
+	   
+				<a href='{% url 'core:job_new' %}'>
+		    		<button class='btn btn-submit waves-effect waves-light indigo right'>
+		  		  		Ajouter
+						<i class='material-icons left'>send</i>
+		    		</button>
+		    	</a>
+			</div>
+	    </div>
+    </div>
+</form>
+
+<div class='list_job'>
+
+<br>
+<h5>Emplois existants:</h5>
+<br>
+
+<div class='row'>
+{% for job in job_list %}
+
+		<div class='col s12 m6'>
+		<div style='padding: 10px; margin: 10px' class='card'>
+			{{ job.name }}
+			<span class="new badge indigo right-align" data-badge-caption="employés">{{ job.user_number }}</span>
+		</div>
+		</div>
+{% endfor %}
+</div>
+</div>
+
+{% endblock content %}
+
+{% block script %}
+
+<script>
+/* Toast to validate form */
+
+{% if valid %}
+	var toastHTML = '<span class="white-text">Enregistré</span>';
+	toastHTML += '<button class="btn-flat toast-action yellow-text" onclick="dismiss()">Ok !</button>';
+	M.toast({html: toastHTML, classes : 'indigo'});
+
+	function dismiss()
+	{
+		console.log('dismiss');
+		M.Toast.dismissAll();
+	}
+{% endif %}
+
+</script>
+
+<script src='{% static 'js/form_button.js' %}'>
+</script>
+
+{% endblock script %}

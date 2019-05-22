@@ -1,0 +1,281 @@
+{% extends "main.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class='row'>
+
+	<!-- Material graph -->
+	<div class='col s12 m12 l12'>
+		<div class='card' style='margin: 5px'>
+			<div class='card-title'>
+				Matériel
+			</div>
+			<div class='card-content'>
+
+				<div class='row'>
+					<!-- Material graph -->
+					<div class='col s12 l6'>
+						<div class='row row-vertical-center no-margin'>
+							<div class='col s12 m6 l12'>
+								<div class='row'>
+									<canvas id="myChart"></canvas>
+								</div>
+							</div>
+							<div class='col s12 m6 l12' style='display: flex;justify-content: center;'>
+								<ul id='object_labels'>
+									{% for object_type in object_types %}
+										<li class='row'>
+											<i class='tiny material-icons label{{ forloop.counter0 }}'>
+												fiber_manual_record
+											</i>
+											<span class='label'>
+												{{ object_type.name }}
+											</span>
+											<span class='value right'>
+												{{ object_type.object_number }}
+											</span>
+										</li>
+						        	{% endfor %}				
+								</ul>
+							</div>
+						</div>
+					</div>
+
+				<div class='col s12 l6'>
+					<div class='row row-vertical-center no-margin'>
+						<div id='stock'>
+							<ul class='collapsible'>
+								<li>			
+									<div class='collapsible-header indigo white-text'>
+										Matériel en stock:
+										<span class="new badge white indigo-text right" data-badge-caption="">{{ objects_stock|length }}</span>
+									</div>
+								</li>
+							</ul>
+							<ul class='collapsible'>
+							{% regroup objects_stock by objectType.name as objects_type_stock %}
+							{% for objects_stock_type in objects_type_stock %}
+								<li>			
+									<div class='collapsible-header'>
+										{{ objects_stock_type.grouper }}
+										<span class="new badge indigo white-text right" data-badge-caption="">{{ objects_stock_type.list|length }}</span>
+									</div>
+									<div class='collapsible-body'>
+										<canvas id='object_stock_state{{forloop.couter0}}' height=70></canvas>
+										{% regroup objects_stock_type.list by state.name as objects_stock_state %}
+										{% for lol in objects_stock_state %}
+											{% for object_assigned in lol.list %}
+											{% endfor %}
+										{% endfor %}
+									</div>
+								</li>
+							{% endfor %}
+							</ul>
+							<br>
+						</div>
+
+						<div id='assigned'>
+							<ul class='collapsible'>
+								<li>			
+									<div class='collapsible-header indigo white-text'>
+										Matériel attribue:
+										<span class="new badge white indigo-text right" data-badge-caption="">{{ objects_assigned|length }}</span>
+									</div>
+								</li>
+							</ul>
+							<ul class='collapsible'>
+							{% regroup objects_assigned by objectType.name as objects_type_assigned %}	
+								{% for objects_assigned_type in objects_type_assigned %}
+									<li>
+										<div class="collapsible-header">{{ objects_assigned_type.grouper }}
+											<span class="new badge indigo white-text right" data-badge-caption="">{{ objects_assigned_type.list|length }}</span>
+										</div>
+										<div class="collapsible-body">
+											<br>
+											<canvas id='object_assigned_state{{forloop.counter0}}' height=70></canvas>
+											{% regroup objects_assigned_type.list by state.name as objects_assigned_state %}
+											{% for lol in objects_assigned_state %}
+												{% for object_assigned in lol.list %}
+												{% endfor %}
+											{% endfor %}
+										</div>
+									</li>
+								{% endfor %}
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+{% endblock content %}
+
+{% block script %}
+
+<!-- Load tabs-->
+<script src='{% static 'js/load/load_tabs.js' %}'>
+</script>
+
+<!-- Load chartjs-->
+<script src='{% static 'js/chart.js' %}'>
+</script>
+
+<!-- Get material_colors-->
+<script src='{% static 'js/material_colors.js' %}'>
+</script>
+
+<!-- ChartJS Part-->
+<script>
+
+/* Colors part */
+function shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+    return array;
+}
+colors = shuffleArray(material_colors_array);
+
+/* Label for object doughnut */
+for(i = 0; i < {{object_types|length }}; i++)
+{
+	$('.label' + i).css('color', colors[i]);
+}
+
+/* doughnut */
+Chart.defaults.global.legend.display = false;
+
+var ctx = document.getElementById('myChart').getContext('2d');
+
+var myChart = new Chart(ctx, {
+    type: 'doughnut',
+    options: {
+		cutoutPercentage: 80,
+    },
+    data: {
+        labels:
+        [
+			{% for object_type in object_types %}
+				'{{ object_type.name }}',
+        	{% endfor %}
+        ],
+        datasets: [{
+            data:
+            [
+			{% for object_type in object_types %}
+				{{ object_type.object_number }},
+        	{% endfor %}
+           	 ],
+            backgroundColor: colors,
+            borderWidth: 0
+        }]
+    },
+});
+
+var barOptions_stacked = {
+    tooltips: {
+        enabled: true
+    },
+    hover :{
+        animationDuration:0
+    },
+    scales: {
+        xAxes: [{
+            ticks: {
+                beginAtZero:true,
+                fontFamily: "'Open Sans Bold', sans-serif",
+                fontSize:11
+            },
+            scaleLabel:{
+                display:false
+            },
+            gridLines: {
+            	display: false,
+            }, 
+            stacked: true
+        }],
+        yAxes: [{
+            gridLines: {
+                display:false,
+                color: "#fff",
+                zeroLineColor: "#fff",
+                zeroLineWidth: 0
+            },
+            scaleLabel:{
+                display:false
+            },
+            ticks: {
+                fontFamily: "'Open Sans Bold', sans-serif",
+                fontSize:11
+            },
+            stacked: true
+        }]
+    },
+    legend:
+    {
+        display:false
+    },
+};
+
+/* Lines */
+//Chart.defaults.global.legend.display = true;
+
+{% regroup objects_assigned by objectType.name as objects_type_assigned %}
+{% for objects_assigned_type in objects_type_assigned %}
+	
+	//{{ objects_assigned_type.grouper }} | {{ objects_assigned_type.list|length }}<br>
+	
+	var bar_zone = document.getElementById('object_assigned_state' + {{ forloop.counter0 }}).getContext('2d');
+	
+	
+	{% regroup objects_assigned_type.list by state.name as objects_assigned_state %}
+	
+	/* Loading data */
+	var bar_datasets = [];
+	var bar_data = [];
+	var bar_labels = [];
+	var bar_colors = [];
+
+	var i = 0;
+	{% for states_values in objects_assigned_state %}
+		bar_data.push( {{ states_values.list|length }} );
+		bar_labels.push( '{{ states_values.grouper }}' );
+		{% with states_values.list|first as first_elem %}
+			bar_colors.push('{{ first_elem.state.color }}');
+		{% endwith %}
+		console.log(bar_colors);
+		bar_datasets.push(
+			{
+				label: bar_labels[i],
+				data: [bar_data[i]],
+				backgroundColor: bar_colors[i],
+		 	}
+		 );
+		i = i + 1;
+	{% endfor %}
+	console.log(bar_datasets);
+
+	var myBarChart = new Chart(
+		bar_zone,
+		{
+		    type: 'horizontalBar',
+		    data:
+		    {
+		    	//labels: bar_data,
+		    	datasets: bar_datasets,
+			},
+			options: barOptions_stacked,
+			
+		}
+	);
+{% endfor %}
+
+</script>
+
+{% endblock script %}

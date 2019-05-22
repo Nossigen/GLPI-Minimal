@@ -1,0 +1,138 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+
+	<div id='main__prefix__' class='command row'>
+		<div class='command_final'>
+					{% include './formset_template/command__object_final.html' %}
+		</div>
+	
+		<div class='command_object'>
+			{% include './formset_template/command__object.html' %}
+		</div>
+		<div class='command_object_data'>
+			{% include './formset_template/command__object_data.html' %}
+		</div>
+	</div>
+
+
+<form id='command_new' action='{% url 'core:command_new' %}' method='post'>
+
+	{% csrf_token %}
+
+	<div class='card white z-depth-2'>
+		<div class='card-content'>
+
+			<div class='row'>
+				<div class='input-field col s12 m6'>
+					{% with form_elem=form.vendor form_type='select' prefix_icon='' %}
+						{% include 'form_template.html' %}
+					{% endwith %}
+				</div>
+				<div class='input-field col s12 m6'>
+					{% with form_elem=form.reference form_type='text' prefix_icon='' %}
+						{% include 'form_template.html' %}
+					{% endwith %}
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class='manage-object'>
+		{{ formset_object.management_form }}		
+	</div>
+
+	<div class='manage-command_object_data'>
+		{{ formset_object_data.management_form }}		
+	</div>
+
+	{% for form_object_data in formset_object_data %}
+		/!\ This should not be displayed /!\ [/forms/command_new.html]
+	{% endfor %}
+
+	<div id='new_object_data'>
+
+	</div>
+
+	<div class='row'>
+		<button class='btn btn-submit waves-effect waves-light indigo disabled right'>
+			Terminé
+			<i class='material-icons right'>send</i>
+		</button>
+	</div>
+</form>
+
+<div class='card white z-depth-2'>
+	<div class='card-content'>
+		<h5 class='indigo-text'>Ajouter:</h5>
+		<div class='card-action'></div>
+		<div class='row centered'>
+			<div class='col s12 m6'>
+			<button class='btn waves-effect waves-light indigo left' id='new_object'>
+				Un matériel nouveau
+				<i class='material-icons right'>add_circle</i>
+			</button>
+			</div>
+			<div class='col s12 m6'>
+
+			<button class='btn waves-effect waves-light indigo right' id='existing_object'>
+				Se baser sur un matériel
+				<i class='material-icons right'>arrow_drop_down_circle</i>
+			</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id='based_on' class='container' style='display: none;'>
+	<div class='card white z-depth-2'>
+		<div class='card-content'>
+			<h5 class='indigo-text'>Options:</h5>
+			<div class='card-action'></div>
+			Se base sur:
+			
+		</div>
+	</div>
+</div>
+
+<div id='is' class='container' style='display: none;'>
+	<div class='card white z-depth-2'>
+		<div class='card-content'>
+			<h5 class='indigo-text'>Options:</h5>
+			<div class='card-action'></div>
+			<div class='row'>
+				Est un:
+				<select id='new_object_select'>
+					{% for object_type in select_object_type %}
+						<option value={{ object_type.pk }}>{{ object_type.name }}</option>
+					{% endfor %}
+				</select>
+				<br>
+				<div class='card-action'></div>
+				<a id='new_object_validate' class='btn indigo right'>Valider</a>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock content %}
+
+{% block script %}
+
+<!-- Dynamic form -->
+<script src='{% static 'js/formset.js'%}'>
+</script>
+
+<script src='{% static 'js/command_dynamic.js' %}'>	
+</script>
+
+<!-- Auto enable validation button -->
+<script src='{% static 'js/form_button.js' %}'>
+</script>
+
+<script>
+	set_form_checker('#command_new');
+</script>
+
+{% endblock script %}

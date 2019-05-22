@@ -1,0 +1,95 @@
+{% extends "main.html" %}
+{% load static %}
+
+{% block content %}
+
+
+<div class='card white z-depth-2'>
+	<div class='card-content'>
+
+<form	action="{% url 'core:user_new' %}"
+		method="post"
+		class='user'
+>
+
+  {% csrf_token %}
+
+  <div class="row">
+    <div class="input-field col s12 m6">
+		{% with form_elem=form.name form_type='text' prefix_icon='account_circle'%}
+			{% include 'form_template.html'%}
+		{% endwith %}
+    </div>
+    <div class="input-field col s12 m6">
+		{% with form_elem=form.forname  form_type='text' prefix_icon='account_circle'%}
+			{% include 'form_template.html'%}
+		{% endwith %}
+    </div>
+  </div>
+  <div class="input-field row">
+		{% with form_elem=form.email form_type='email' prefix_icon='email' %}
+			{% include 'form_template.html'%}
+		{% endwith %}
+  </div>
+  <div class="input-field row">
+		{% with form_elem=form.oAuthKey form_type='text' prefix_icon='vpn_key' %}
+			{% include 'form_template.html'%}
+		{% endwith %}
+  </div>
+  <div class="input-field row">
+		{% with form_elem=form.entryDate form_type='date' prefix_icon='date_range' %}
+			{% include 'form_template.html'%}
+		{% endwith %}
+  </div>
+  <div class="input-field row">
+		{% with form_elem=form.outDate form_type='date' prefix_icon='date_range' %}
+			{% include 'form_template.html'%}
+		{% endwith %}
+  </div>
+  <div class="row">
+    <div class="input-field col s12 m6">
+		{% with form_elem=form.userRole form_type='select' prefix_icon='group' %}
+			{% include 'form_template.html'%}
+		{% endwith %}
+    </div>
+    <div class="input-field col s12 m6">
+		{% with form_elem=form.userJob form_type='select' prefix_icon='assignment_ind' %}
+			{% include 'form_template.html'%}
+		{% endwith %}
+    </div>
+  </div>
+
+   <button class="btn btn-submit disabled waves-effect waves-light indigo right" type="submit" name="action">Enregistrer
+    <i class="material-icons right">send</i>
+  </button>
+</form>
+
+    <a href="/user/list">
+      <button class="btn waves-effect waves-light red left">Annuler
+	<i class="material-icons left">cancel</i>
+      </button>
+    </a>
+	<br>
+	<br>
+</div>
+</div>
+{% endblock content %}
+
+{% block script %}
+
+<!-- Selection form -->
+<script src="{% static "js/load/load_select.js" %}">
+</script>
+
+<!-- Datepicker form -->
+<script src="{% static "js/load/load_datepicker_fr.js" %}">
+</script>
+
+<script src="{% static "js/form_button.js" %}">
+</script>
+
+<script>
+	set_form_checker('.user');
+</script>
+
+{% endblock script %}

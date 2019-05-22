@@ -1,0 +1,62 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+
+<form id='vendor_new' action='{% url 'core:vendor_new' %}' method='post'>
+
+	{% csrf_token %}
+	<div class='card white z-depth-2'>
+		<div class='card-content'>
+
+			<div class='row'>
+
+				<div class='input-field col s12 m6'>
+					{% with form_elem=form.name form_type='text' prefix_icon='' %}
+						{% include 'form_template.html' %}
+					{% endwith %}
+				</div>
+				<div class='input-field col s12 m6'>
+					{% with form_elem=form.email form_type='email' prefix_icon='' %}
+						{% include 'form_template.html' %}
+					{% endwith %}
+				</div>
+			</div>
+			<div class='row'>
+
+				<div class='input-field'>
+					{% with form_elem=form.adress form_type='text' prefix_icon='' %}
+						{% include 'form_template.html' %}
+					{% endwith %}
+				</div>
+			</div>
+			<div class='row'>
+				<div class='input-field'>
+					{% with form_elem=form.comment form_type='text_area' prefix_icon='' %}
+						{% include 'form_template.html' %}
+					{% endwith %}
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+
+	<button class='btn btn-submit waves-effect waves-light indigo disabled right'>
+		Ajouter
+		<i class='material-icons right'>send</i>
+	</button>
+</form>
+
+{% endblock content %}
+
+{% block script %}
+
+<script src='{% static 'js/form_button.js' %}'>
+</script>
+
+<script>
+	set_form_checker('#vendor_new');
+</script>
+
+{% endblock script %}

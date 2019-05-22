@@ -1,0 +1,12 @@
+@media (min-width: 992px)
+{
+    main
+    {
+	padding-left: 300px;
+    }
+
+    #main_title
+    {
+	padding-left: 300px;
+    }
+}

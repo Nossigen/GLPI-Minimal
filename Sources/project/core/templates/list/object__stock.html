@@ -1,0 +1,61 @@
+{% extends "main.html" %}
+{% load static %}
+
+{% block content %}
+
+{% if objectList %}
+
+{% regroup objectList by objectType.name as objects_by_type %}
+
+{% for objects in objects_by_type %}
+
+<br>
+<h5 class='subtitle'> {{ objects.grouper }}<h5>
+
+<table style='border: 2px solid #3f51b5;' class="striped centered responsive-table">
+  <thead>
+    <tr class='center-align' >
+      <th>Nom</th>
+      <th>Attribution</th>
+      <th>Détail</th>
+      <th>Etat</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for object in objects.list %}
+    <tr>
+      <td style='width: 300px'> {{ object.name }} </td>
+      <td>
+		<a class='btn waves-effect waves-light indigo' href='{% url 'core:object_to_user' object.ref %}'>
+			<i class='material-icons'>
+				send
+			</i>
+		</a>
+      </td>
+      <td>
+      		<a class='btn white black-text' href='{% url 'core:object_info' object.pk %}'>
+				<i class='material-icons'>
+					list
+				</i>      			
+      		</a>
+      </td>
+      <td>
+		{{ object.state.objectState.name }}
+		<i class='material-icons' style='color: {{ object.state.objectState.color }}'>
+			fiber_manual_record
+		</i>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<br>
+
+{% endfor %}
+
+{% else %}
+
+<h4> Aucun matériel en stock actuellement </h4>
+
+{% endif %}
+{% endblock content %}

@@ -1,0 +1,39 @@
+{% if navLinks %}
+<ul id="navTitle" class="dropdown-content">
+	{% for link in navLinks %}
+	<li>
+		<a href='{{ link.ref }}'>
+		{{ link.name }}
+		</a>
+	</li>
+	{% endfor %}
+</ul>
+{% endif %}
+
+{% if navTitle %}
+<br>
+<br>
+<nav>
+	<div class="nav-wrapper indigo">
+		<i class="material-icons left">chevron_right</i>
+		<a href="#" class="brand-logo">{{ navTitle }}</a>
+
+		{% if navLinks %}
+		<ul class="right">
+			<!-- Dropdown Trigger -->
+			<li>
+				<a class="dropdown-trigger" href="#!" data-target="navTitle">
+					{% if navLinkActive %}
+						{{ navLinkActive }}
+					{% else %}
+						Plus/Options
+					{% endif %}
+					<i class="material-icons right">arrow_drop_down</i>
+				</a>
+			</li>
+		</ul>
+		{% endif %}
+	</div>
+<br>
+</nav>
+{% endif %}

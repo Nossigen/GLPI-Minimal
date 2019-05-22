@@ -1,0 +1,68 @@
+<div class='card-action'>
+</div>
+
+{% if objects %}
+
+<div class='card-content white-text'>
+	<div class='white-text'>
+
+		<h5>Objets</h5>
+		<br>
+
+		{% for object in objects %}
+
+		    {% if object.depth == 0 %}
+
+				<div class='card-panel white'>
+				
+						<div class='row indigo-text valign-wrapper'>
+								<h5> {{ object.objectType.name }} - {{ object.name }}</h5>
+						</div>
+						<div class='card-action'></div>
+
+						<span class='indigo-text'>
+						<div class='row'>
+                            <div class=''>
+    	                        <table style=''>
+     		                       	<thead>
+										<tr>
+		  		  						    {% for data in datas %}
+												{% if data.item.pk == object.pk %}
+														<th>{{ data.objectDataType.name }}</th>		
+			                	                    {% endif %}
+		  		  						    {% endfor %}
+										</tr>
+ 							    	</thead>
+ 							    	<tbody>
+										<tr>
+  		  						    {% for data in datas %}
+        	                            {% if data.item.pk == object.pk %}
+												<td>{{ data.value }}</td>		
+											{% endif %}
+  		  						    {% endfor %}
+  		  						    </tr>
+ 		   						    </tbody>
+	    						</table>
+	    						<br>
+						    </div>
+
+						</div>
+						</span>
+
+						<div class='card-action'>
+							<a class='' href='/object/{{object.ref }}'>Description</a>
+							<a class='right' href={% url 'core:object_to_stock' object.ref %}>Formulaire de restitution</a>
+						</div>
+				</div>				
+
+            {% endif %}
+			
+	{% endfor %}
+	</div>
+</div>
+{% else %}
+<div class='center-align white-text'>
+	{{user.name}} {{user.forname}} n'a pas de matériel attribué.
+</div>
+<br>
+{% endif %}

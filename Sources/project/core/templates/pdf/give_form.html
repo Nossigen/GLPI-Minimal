@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+ <html>
+     <head>
+         <title>remise-{{ history.ref }}</title>
+         <style type="text/css">
+             body {
+                 font-weight: 200;
+                 font-size: 14px;
+             }
+             .title {
+                 font-size: 22px;
+                 font-weight: 100;
+                /* text-align: right;*/
+                padding: 10px 20px 0px 20px;  
+             }
+             .title span {
+                 color: #007cae;
+             }
+             .details {
+                 padding: 10px 20px 0px 20px;
+                 text-align: left !important;
+             }
+
+             .hrItem {
+                 border: none;
+                 height: 1px;
+                 /* Set the hr color */
+                 color: #333; /* old IE */
+                 background-color: #fff; /* Modern Browsers */
+             }
+             p
+             {
+             	font-size: 12px;
+             }
+
+             .information
+             {
+             	border-left: 1px solid #9e9e9e;
+             	border-right: 1px solid #9e9e9e;
+		       	border-top: 1px solid #9e9e9e;
+			    border-bottom: 1px solid #9e9e9e;
+				
+             	font-size: 12px;
+             	text-align: left;
+             }
+		     table .information td
+		     {
+            	text-align: center;
+             }
+             img
+             {
+            	 	position: fixed;
+            	 	left: 100px;
+             }
+         </style>
+     </head>
+     <body>
+         <div class='wrapper'>
+             <div class='header'>
+             	<table>
+             		<td><p class='title'>Remise de matériel</p></td>
+					<td><img height=50 style='display: block; margin-left: 150px;' src='static/img/logo.png'></td>
+				</table>
+	             <hr class='hrItem' />
+             </div>
+         </div>
+         <div class='details'>
+			<p>
+				ACTECIL vous remet à partir de ce jour un équipement reste la propriété de la société ACTECIL.<br>
+				Son utilisation est régie par la charte d'utilisation des ressources informatiques.<br>
+			</p>
+			Numéro de fiche: {{ history.ref }}<br>
+			<h1>Matériel remis:</h1>
+			<table class='information'>
+				<tr>
+					<th width='30%'>Type de matériel:</th>
+					<td>{{ history.objectShown.objectType.name }}</td>
+				</tr>
+				<tr>
+					<th>Modèle:</th>
+					<td>{{ history.objectShown.name }}</td>
+				</tr>
+				<tr>
+					<th>N de série:</th>
+					<td>{{ history.objectShown.ref }}</td>
+				</tr>
+				<tr>
+					<th>Etat:</th>
+					<td>{{ history.objectState.name }}</td>
+				</tr>
+			</table>
+
+			<p>
+				Cet équipement doit être rendu en parfait état de marche avant tout départ de la société quel que soit le motif.<br>
+				La perte, le vol ou la détérioration de cet équipement entrainera une participation financière de l'utilisateur.<br>
+				Lors de la restitution de celui-ci, les moyens d'accès devront être réinitialisés ou fournis (code pin, mots de passe, etc.)
+			</p>
+			<table class='users'>
+				<tr style='border: 1px solid #9e9e9e;'>
+					<th colspan='2' width='50%'>Remis à:</th>
+					<th colspan='2' width='50%'>Par:</th>
+				</tr>
+				<tr>
+					<th style='border-left: 1px solid #9e9e9e; text-align:left;' width='25%'>Nom:</th>
+					<td style='border-right: 1px solid #9e9e9e; text-align:center;' width='25%'>{{ history.user.name }}</td>
+					<th style='border-left: 1px solid #9e9e9e; text-align:left;' width='25%'>Nom:</th>
+					<td style='border-right: 1px solid #9e9e9e; text-align:center;' width='25%'></td>
+				</tr>
+				<tr>
+					<th style='border-left: 1px solid #9e9e9e; text-align:left;' width='25%'>Prénom:</th>
+					<td style='border-right: 1px solid #9e9e9e; text-align:center;' width='25%'>{{ history.user.forname }}</td>
+					<th style='border-left: 1px solid #9e9e9e; text-align:left;' width='25%'>Prénom:</th>
+					<td style='border-right: 1px solid #9e9e9e; text-align:center;' width='25%'></td>
+				</tr>
+				<tr>
+					<th style='border-left: 1px solid #9e9e9e; text-align:left;' width='25%'>Fonction:</th>
+					<td style='border-right: 1px solid #9e9e9e; text-align:center;' width='25%'>{{ history.user.userJob }}</td>
+					<th style='border-left: 1px solid #9e9e9e; text-align:left;' width='25%'>Fonction:</th>
+					<td style='border-right: 1px solid #9e9e9e; text-align:center;' width='25%'></td>
+				</tr>
+				<tr style='border-bottom: 1px solid #9e9e9e;'>
+					<th colspan='2' style='border-left: 1px solid #9e9e9e; text-align:left;' width='50%'>Signature:<br><br><br><br><br></th>
+					<th colspan='2' style='border-left: 1px solid #9e9e9e;border-right: 1px solid #9e9e9e; text-align:left;' width='50%'>Signature:<br><br><br><br><br></th>
+				</tr>			
+			</table>
+			<br>
+			En double exemplaire
+			<table>
+				<tr style='border-top: 1px solid #9e9e9e'>
+					<td>Fait à: {{history.position}}</td>
+					<td style='text-align: right;'>Le: {{history.date}}</td>
+				</tr>
+			</table>
+          </div>
+ 	</body>
+ </html>

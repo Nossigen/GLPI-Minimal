@@ -1,0 +1,49 @@
+<div class="form-__prefix__-objectDataType" style="display: none;">
+  <div class="form_inner row">
+      <div class="card white z-depth-2">
+        <div class="card-content indigo-text">
+          <span class="card-title">Spécification n: __prefix__</span>
+	  <br>
+
+	  <div class="row">
+
+	    <div class="input-field col s12 m6">
+			{% with form_elem=formsetObjectDataType.empty_form.name form_type='text' prefix_icon='short_text'%}
+				{% include 'form_template.html'%}
+			{% endwith %}
+	    </div>
+
+	    <div class="input-field col s12 m6">
+			{% with form_elem=formsetObjectDataType.empty_form.s_type form_type='text' prefix_icon='chevron_right'%}
+				{% include 'form_template.html'%}
+			{% endwith %}
+	    </div>
+
+	  </div>
+
+	  <div class="row">
+
+	    <div class="input-field col s6">
+
+	      <label>
+			<input type="checkbox" name="{{ formsetObjectDataType.empty_form.mendatory.name }}"
+		       id="{{ formsetObjectDataType.empty_form.mendatory.id_for_label }}">
+			<span>{{ formsetObjectDataType.empty_form.mendatory.label }}</span>
+	      </label>
+
+	    </div>
+
+	    <div class="input-field col s6">
+
+	      <label>
+			<input type="checkbox" name="{{ formsetObjectDataType.empty_form.visible.name }}"
+		       id="{{ formsetObjectDataType.empty_form.visible.id_for_label }}">
+			<span>{{ formsetObjectDataType.empty_form.visible.label }}</span>
+	      </label>
+
+	    </div>
+	  </div>
+	</div>
+    </div>
+  </div>
+</div>

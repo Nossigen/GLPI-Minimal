@@ -1,0 +1,41 @@
+{% extends "main.html" %}
+{% load static %}
+
+{% block content %}
+
+{% if vendor_list %}
+
+<table class="striped centered responsive-table">
+
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Adresse</th>
+      <th>Contact</th>
+      <th>Informations</th>
+    </tr>
+  </thead>
+
+  <tbody>
+	{% for vendor in vendor_list %}
+	<tr>
+		<td>{{ vendor.name }}</td>
+		<td>{{ vendor.adress }}</td>
+		<td>{{ vendor.email | default:"x" }}</td>
+		<td>
+			<a class="waves-effect waves-light btn indigo" href="{% url 'core:vendor_info' vendor.pk %}">
+				Lien<i class="material-icons right">send</i>
+			</a>
+		</td>
+		</tr>
+	{% endfor %}
+  </tbody>
+  <br>
+</table>
+{% else %}
+
+  Aucun fournisseur n'est enregistré pour le moment<br>
+
+{% endif %}
+
+{% endblock content %}

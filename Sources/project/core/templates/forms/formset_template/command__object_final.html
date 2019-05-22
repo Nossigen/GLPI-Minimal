@@ -1,0 +1,23 @@
+<div class='form-__prefix__-command_final' style='display:none'>
+	<div class='form_inner row'>
+			<div class='card white z-depth-2'>
+				<div class='row center-align valign-wrapper'>
+
+					<div class='col s12 m4 input-field'>
+						__TYPE__
+					</div>
+
+					<div class='col s12 m4' style='border-left: 1px solid #9e9e9e; border-right: 1px solid #9e9e9e'>
+						__NAME__
+					</div>
+
+					<div class='col s12 m4'>
+						{% with form_elem=formset_object.empty_form.count form_type='number' prefix_icon='' %}
+							{% include 'form_template.html' %}
+						{% endwith %}
+					</div>
+
+				</div>
+			</div>
+	</div>
+</div>

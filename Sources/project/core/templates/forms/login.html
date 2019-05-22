@@ -1,0 +1,20 @@
+{% extends 'main.html' %}
+{% load static %}
+
+
+{% block content %}
+
+Connectez vous:
+
+<form	action='{% url 'core:login' %}'
+		method='post'
+>
+
+{% csrf_token %}
+
+{{form}}
+
+<button type='submit'>send</button>
+
+</form>
+{% endblock content %}

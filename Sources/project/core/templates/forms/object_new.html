@@ -1,0 +1,145 @@
+{% extends "main.html" %}
+{% load static %}
+
+{% block title %}
+Ajout d'objet
+{% endblock title %}
+
+{% block content %}
+
+<div id="add_object">
+
+<div class='ajax'>
+	{% include "./formset_template/object_data.html" %}
+</div>
+
+<form action="{% url 'core:object_new' %}" method="post">
+	{% csrf_token %}
+
+	<div class='card white z-depth-2'>
+		<div class='card-content'>
+			<div class='row'>
+				<div class='input-field col s12 m6'>
+				{% with form_elem=formObject.name form_type='text' prefix_icon='' %}
+					{% include 'form_template.html'%}
+				{% endwith %}
+			</div>
+
+			<div class='input-field col s12 m6 select-wrapper'>
+				<select name='{{ formObject.objectType.name }}'
+				 		id='{{ formObject.fields.objectType.id_for_label }}' 
+						class='object_type_select'
+				>
+					{% for x,y in formObject.fields.objectType.choices %}
+   						<option value='{{ x }}'> {{ y }}</option>
+					{% endfor %}
+				</select>
+				<label for='{{ formObject.objectType.id_for_label }}'>
+					{{ formObject.objectType.label }}
+				</label>
+			</div>
+		</div>
+	</div>
+</div>
+
+	<div class='manage-objectData'>
+		{{ formsetObjectData.management_form }}
+	</div>
+	
+	{% for form in formsetObjectData %}
+		/!\ This should not be displayed /!\ [/new/object.html]
+	{% endfor %}
+
+	<button id='btn-send'
+			class='btn waves-effect waves-light indigo disabled right'
+	>
+	   	Ajouter
+	   	<i class="material-icons right">send</i>
+	</button>
+</form>
+
+</div>
+
+{% endblock content %}
+
+{% block script %}
+
+<!-- Selection list form -->
+<script src="{% static "js/load/load_select.js" %}">
+</script>
+
+<!-- Tabs to select which form to use -->
+<script src="{% static "js/load/load_tabs.js" %}">
+</script>
+
+<!-- Add form inputs for objectTypeForm spec -->
+<script src="{% static "js/formset.js" %}">
+</script>
+
+<script>
+	$('#new_objectDataType').click({'form_name': 'objectDataType'}, event_form_add);
+</script>
+
+
+<!-- Dynamic form for add_object part -->
+<script>
+
+function    load_object_type()
+{
+    selected = parseInt($(this).val());
+	console.log(selected);
+	if (selected >= 1)
+    {
+	    $.ajax(
+        {
+	           	url: '{% url 'core:get_type_form' %}',
+				data: {'objectType': selected},
+				dataType: 'json',
+				success: function (data) {
+					var selected = select_last_form_name('objectData');
+
+					while (selected != 'form-__prefix__-objectData')
+					{
+						$('.' + selected).remove();
+						selected = select_last_form_name('objectData');
+					}
+
+     				var parsed_data = eval(data.objectType);
+					console.log('Parsed data:');
+     				console.log(parsed_data);
+
+					var i = 0;
+     				while (parsed_data[i])
+     				{
+     					if (i == 0)
+     					{
+     						form_add_after('objectData', $('.manage-objectData'))
+     					}
+     					else
+     					{
+     						form_add('objectData');
+     					}
+						var new_card = $('.' + select_last_form_name('objectData'));
+						new_html = new_card.html().replace(/__title__/g, parsed_data[i].fields.name);
+						new_card.find('.form_inner').remove();
+						new_card.prepend(new_html);
+
+						new_card.find('.object_data_select').val(parsed_data[i].pk);
+
+						i = i + 1;
+					}
+                }
+			}
+		);
+		$('#btn-send').removeClass('disabled');
+	}
+	else
+	{
+		$('#btn-send').addClass('disabled');
+	}
+}
+
+$('.object_type_select').change(load_object_type);
+</script>
+
+{% endblock script %}

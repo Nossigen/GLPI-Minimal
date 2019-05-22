@@ -1,0 +1,67 @@
+{% extends "main.html" %}
+{% load static %}
+
+{% block head %}
+
+<link rel='stylesheet' href='{% static 'css/minicolors.css' %}'>
+
+{% endblock head %}
+
+{% block content %}
+
+<form	action="{% url 'core:object_state_new' %}"
+		method="post"
+		class='state'
+>
+	{% csrf_token %}
+
+	<div class='card white z-depth-2'>
+		<div class='card-content'>
+			<div class='row container'>
+				<div class='input-field col s12 m6'>
+					{{ form.name }}
+					<label for='{{ form.name.id_for_label }}'>
+						{{ form.name.label}}
+					</label>
+				</div>
+				<div class='input-field col s12 m6'>
+					<div class='right'>
+						<input 	type='text'
+							class='minicolor-input'
+							data-position='right'
+							id='{{ form.color.id_for_label }}'
+							name='{{ form.color.name }}'
+							value='#ffffff'
+							maxlength='7'>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<button class='btn btn-submit disabled waves-effect waves-light indigo right'>
+	   	Ajouter
+	   	<i class="material-icons right">send</i>
+	</button>
+</form>
+
+{% endblock content %}
+
+{% block script %}
+<script src='{% static 'js/minicolors.js' %}'>
+</script>
+
+<script>
+	$('.minicolor-input').minicolors(
+		{
+			position: 'bottom right',
+		}
+	);
+</script>
+
+<script src='{% static 'js/form_button.js' %}'>
+</script>
+
+<script>
+	set_form_checker('.state');
+</script>
+{% endblock script %}

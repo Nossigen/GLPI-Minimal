@@ -1,0 +1,75 @@
+{% extends "main.html" %}
+{% load static %}
+
+{% block content %}
+
+	{% if object %}
+
+		<div class="card indigo darken-1">
+			<div class="card-content white-text">
+
+				<span class="card-title"><h4>{{ object.name }}</h4></span>
+
+				<br>
+				<div class="card-action"></div>
+
+				<div class="row">
+					<h5>Informations:</h5>
+					<br>
+					<div class="col s12 m6">
+						<strong><U>Type:</U></strong> {{ object.objectType.name }}<br>
+						<strong><U>Appartient à:</U></strong> {{ object.user.forname }} {{ object.user.name }}<br>
+					</div>
+					<div class="col s12 m6 right">
+						<strong><U>Commande:</U></strong> {{ object.command.ref | default:"Inconnue"}}<br>
+						<strong><U>Date d'arrivée:</U></strong> Inconnue <br>
+					</div>
+				</div>
+
+				{% if objectData %}
+					<div class="card-action"></div>
+	
+					<div class="row">
+						<h5>Spécifications:</h5>
+						<br>
+						<div class='container'>
+						<table class='white indigo-text stripped centered'>
+							<tr>
+								<th>Nom</th>
+									{% for data in objectData %}
+										<td>{{ data.objectDataType.name }}</td>
+									{% endfor %}
+							</tr>
+							<tr>
+								<th>Valeur</th>
+								{% for data in objectData %}
+									<td> {{ data.value }}</td>
+								{% endfor %}
+							</tr>
+						</table>
+					</div>
+
+				</div>
+				{% endif %}
+			</div>
+
+
+			<div class="card-action">
+
+					<a class="indigo-text" href="{% url 'core:object_to_stock' object.pk %}">
+						<button class="btn waves-effect waves-light indigo-text white left ">
+							Formulaire
+						</button>
+					</a>
+
+			</div>
+			<br>
+		</div>
+
+	{% else %}
+	
+		<h1 class='align-center'>L'objet indiqué n'existe pas</h1>
+		
+	{% endif %}
+
+{% endblock content %}

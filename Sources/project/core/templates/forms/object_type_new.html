@@ -1,0 +1,69 @@
+{% extends "main.html" %}
+{% load static %}
+
+{% block title %}
+Ajout d'objet
+{% endblock title %}
+
+{% block content %}
+
+{% include "./formset_template/object_data_type.html" %}
+
+<form action='{% url 'core:object_type_new' %}' method='post'>
+
+    {% csrf_token %}
+
+    <div class='card white z-depth-2'>
+        <div class='card-content'>
+        	<div class='row input-field'>
+			{% with form_elem=formObjectType.name form_type='text' prefix_icon=''%}
+				{% include 'form_template.html'%}
+			{% endwith %}
+			</div>
+        </div>
+    </div>
+    
+	<div class='manage-objectDataType'>
+    	{{ formsetObjectDataType.management_form }}
+	</div>
+
+    {% for form in formsetObjectDataType %}
+
+		/!\ This should not be printed /!\
+
+    {% endfor %}
+
+    <a id='new_objectDataType' class='btn waves-effect waves-light orange'>
+        Ajouter une spécification
+        <i class='material-icons left'>add</i>
+    </a>
+    <button class='btn waves-effect waves-light indigo right'>
+        Enregistrer
+        <i class='material-icons right'>send</i>
+    </button>
+    <br>
+</form>
+
+{% endblock content %}
+
+{% block script %}
+
+<!-- Selection list form -->
+<script src="{% static "js/load/load_select.js" %}">
+</script>
+
+<!-- Tabs to select which form to use -->
+<script src="{% static "js/load/load_tabs.js" %}">
+</script>
+
+<!-- Add form inputs for objectTypeForm spec -->
+<script src="{% static "js/formset.js" %}">
+</script>
+
+<script>
+
+	$('#new_objectDataType').click({'form_name' : 'objectDataType'}, event_form_add);
+
+</script>
+
+{% endblock script %}

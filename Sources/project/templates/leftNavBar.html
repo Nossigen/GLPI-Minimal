@@ -1,0 +1,65 @@
+{% block sidenavbar %}
+
+<ul id="mobile-version" class="sidenav sidenav-fixed">
+
+	<li class="indigo center white-text">
+		Navigation - Administration
+	</li>
+
+	<ul class="collapsible">
+
+		<li class="bold">
+			<a class="collapsible-header waves-effect">Administration</a>
+			<div class="collapsible-body">
+				<ul>
+					<li><a href="{% url 'core:job_new' %}">Ajouter un nouvel emploi</a></li>
+					<li><a href="{% url 'core:object_type_new' %}">Ajouter un nouveau type d'objet</a></li>
+					<li><a href="{% url 'core:object_state_new' %}">Ajouter un nouvel etat d'objet</a></li>
+					<li><a href="{% url 'core:vendor_new' %}">Ajouter un nouveau fournisseur</a></li>
+				</ul>
+			</div>
+		</li>
+
+		<li class="bold">
+			<a class="collapsible-header waves-effect">
+				Utilisateurs
+			</a>
+			<div class="collapsible-body">
+				<ul>
+					<li><a href="{% url 'core:user_new' %}">Ajouter</a></li>
+					<li><a href="{% url 'core:user_list' %}">Liste</a></li>
+				</ul>
+			</div>
+		</li>
+
+		<li class="bold">
+			<a class="collapsible-header waves-effect">Matériel</a>
+			<div class="collapsible-body">
+				<ul>
+					<li><a href="{% url 'core:object_new' %}">Ajouter</a></li>
+					<li><a href="{% url 'core:object_stock_list' %}">En stock</a></li>
+					<li><a href="{% url 'core:object_list' %}">Attribué</a></li>
+					<li><a href="#">Rechercher</a></li>
+				</ul>
+			</div>
+		</li>
+
+		<li class="bold">
+			<a class="collapsible-header waves-effect">Fournisseurs</a>
+			<div class="collapsible-body">
+				<ul>
+					<li><a href="{% url 'core:command_new' %}">Nouvelle commande</a></li>
+					<li><a href="{% url 'core:command_list' %}">Liste des commandes</a></li>
+					<li><a href="{% url 'core:vendor_list' %}">Liste des fournisseurs</a></li>
+				</ul>
+			</div>
+		</li>
+
+		<li class="bold">
+			<a href="{% url 'core:admin' %}"
+				class="waves-effect">Statistiques</a>
+		</li>
+	</ul>
+</ul>
+
+{% endblock sidenavbar %}

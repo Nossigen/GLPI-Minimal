@@ -1,0 +1,66 @@
+{% extends "main.html" %}
+{% load static %}
+
+
+{% if user %}
+
+{% block content %}
+
+<div class="card indigo darken-1">
+  <div class="card-content white-text">
+    <span class="card-title"><h4>{{user.forname}} {{user.name}}</h4></span>
+    <br>
+    <div class="card-action"></div>
+    <div class="row">
+      <h5>Informations personnelles:</h5>
+      <br>
+      <div class="col s12 m6">
+	<strong><U>Role:</U></strong> {{user.userRole.name | default:"Non fournis"}}<br>
+	<strong><U>Date d'entrée:</U></strong> {{user.entryDate | default:"Non fournie"}}<br>
+	<strong><U>Nom du poste:</U></strong> {{user.userJob.name }}<br>
+      </div>
+      <div class="col s12 m6 right">
+	<strong><U>Email:</U></strong> {{user.email | default:"Non fournie"}}<br>
+	<strong><U>Date de sortie:</U></strong> {{user.outDate | default:"Non connue"}}<br>
+      </div>
+    </div>
+  </div>
+	{% include './user__object.html' %}
+
+  <div class="card-action">
+	<a class="btn waves-effect waves-light red right modal-trigger" href="#modal1">
+		Supprimer
+	</a>
+
+    <a class="indigo-text" href="{% url 'core:user_edit' user.pk %}">
+      <button class="btn waves-effect waves-light indigo-text white left">
+	Editer
+      </button>
+    </a>
+  </div>
+  <br>
+</div>
+
+ <!-- Modal Structure -->
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <h4>Êtes vous sûr ?</h4>
+      <p>La supression d'un utilisateur inclut la supression de l'utilisateur, ainsi que tous les objets non remis.</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Annuler</a>
+      <a href="{% url 'core:user_delete' user.pk %}" class="modal-close waves-effect waves-green btn-flat">Confirmer</a>
+    </div>
+  </div>
+
+
+{% endblock content %}
+
+{% block script %}
+
+<script src='{% static 'js/load_modal.js' %}'>
+</script>
+
+{% endblock script %}
+
+{% endif %}
